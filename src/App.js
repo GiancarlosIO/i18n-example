@@ -1,23 +1,27 @@
 import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import { useTranslation } from 'react-i18next';
 
 function App() {
+  const { t, i18n } = useTranslation();
+  console.log({ data: i18n.services.resourceStore.data })
+
+  const onChange = e => {
+    i18n.changeLanguage(e.target.value);
+  }
+
   return (
     <div className="App">
       <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
+        <h1>{t('home.title')}</h1>
         <p>
-          Edit <code>src/App.js</code> and save to reload.
+          the actual language is { i18n.languages[0] }
         </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
+        <select onChange={onChange}>
+          <option disabled>Select a lang</option>
+          {i18n.languages.map(lang => (
+            <option key={lang} value={lang}>{lang}</option>
+          ))}
+        </select>
       </header>
     </div>
   );
